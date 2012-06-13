@@ -5,9 +5,9 @@ Copyright 2012, Joe Lee <jpl@ireland.com>
 Python script to intercept the ssh command and prompt the user for a username 
 if none is provided.
 
-If it exists, the file $HOME/.ssh/auto_hosts opened and read by the script.
-Each line of the file will be treated as a host that uses authentication keys
-and does not require a username.
+If it exists, the file $HOME/.ssh/auto_hosts will be opened and read by the 
+script. Each line of the file will be treated as a host that uses 
+authentication keys and does not require a username.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
