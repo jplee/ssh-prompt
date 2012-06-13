@@ -1,0 +1,41 @@
+#!/usr/bin/python
+#
+# ssh
+#
+# This program is free software; you can redistribute it and/or modify it under
+# the terms of the GNU General Public License version 3 and up, as published by
+# the Free Software Foundation.
+
+import argparse
+import subprocess
+import os
+import sys
+
+auto_hosts = []
+try:
+    host_file = open(os.path.expanduser("~/.ssh/auto_hosts"))
+    for host in host_file:
+        host = host.rstrip()
+        auto_hosts.append(host)
+except:
+    pass
+
+parser = argparse.ArgumentParser(prog='ssh')
+parser.add_argument('host', action='store')
+
+arguments = parser.parse_known_args()
+user_at_host = vars(arguments[0])['host']
+unknown_args = ' '.join(arguments[1])
+
+host = "".join(user_at_host)
+if "@" in host:                     # both host and username are provided
+    command = "".join(["/usr/bin/ssh ", unknown_args, " ", host])
+    subprocess.call(command, shell=True)
+elif host.lower() in auto_hosts:    # host is a known host (no username req)
+    argv = "".join(sys.argv[-1])
+    command = "".join(["/usr/bin/ssh ", argv])
+    subprocess.call(command, shell=True)
+else:                               # host is unknown, prompt for username
+    user = raw_input("Enter your username: ")
+    command = "".join(["/usr/bin/ssh ", unknown_args, " ", user, '@', host])
+    subprocess.call(command, shell=True)
