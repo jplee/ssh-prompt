@@ -9,7 +9,7 @@ If it exists, the file $HOME/.ssh/auto_hosts will be opened and read by the
 script. Each line of the file will be treated as a host that uses 
 authentication keys and does not require a username.
 
-WARNING: Using this script will cause issues with git. To resolve the issue
+WARNING: Using this script will cause issues with git. To resolve the issue,
 use the shell environment variable GIT_SSH. On a typical GNU/Linux system,
 GIT_SSH should be set to /usr/bin/ssh
 
