@@ -13,7 +13,7 @@ import sys
 
 auto_hosts = []
 try:
-    host_file = open(os.path.expanduser("~/.ssh/auto_hosts"))
+    host_file = open(os.path.expanduser("~/.ssh/auth_hosts"))
     for host in host_file:
         host = host.rstrip()
         auto_hosts.append(host)
