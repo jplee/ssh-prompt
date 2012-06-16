@@ -10,13 +10,26 @@ import argparse
 import subprocess
 import os
 import sys
+import signal
 
-auto_hosts = []
+###############################################################################
+"""
+Signal handler to prevent garbage output from Python when subprocess is
+interrupted.
+"""
+def interrupt_handler(signal, frame):
+    sys.stdout.write("\n")
+    sys.exit(0)
+
+signal.signal(signal.SIGINT, interrupt_handler)
+###############################################################################
+
+auth_hosts = []
 try:
     host_file = open(os.path.expanduser("~/.ssh/auth_hosts"))
     for host in host_file:
         host = host.rstrip()
-        auto_hosts.append(host)
+        auth_hosts.append(host)
 except:
     pass
 
@@ -31,7 +44,7 @@ host = "".join(user_at_host)
 if "@" in host:                     # both host and username are provided
     command = "".join(["/usr/bin/ssh ", unknown_args, " ", host])
     subprocess.call(command, shell=True)
-elif host.lower() in auto_hosts:    # host is a known host (no username req)
+elif host.lower() in auth_hosts:    # host is a known host (no username req)
     argv = "".join(sys.argv[-1])
     command = "".join(["/usr/bin/ssh ", argv])
     subprocess.call(command, shell=True)
